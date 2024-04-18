@@ -1,0 +1,134 @@
+.cat-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  position: relative;
+  width: 500px;
+  height: 400px;
+  margin: auto;
+  padding: 30px 40px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px white;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.cat-logo {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  width: 150px;
+  z-index: 2;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+  z-index: 1;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.login-container label {
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px 50px 10px 20px;
+  outline: none;
+  border: 2px solid #ccc;
+  border-radius: 40px;
+  box-shadow: 0 0 5px white;
+  transition: box-shadow 0.5s ease;
+}
+
+.login-container button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 40px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 0 5px white;
+  z-index: 1;
+}
+
+.login-container button[type="submit"]:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 15px white;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  box-shadow: 0 0 15px white;
+}
+
+label .icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  color: black;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.register-link {
+  font-size: 14.5px;
+  text-align: center;
+}
+
+.register-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link p a:hover {
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .login-container {
+    width: calc(90% - 200px);
+    height: auto;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .cat-logo {
+    width: 150px;
+    right: 55px;
+  }
+}
