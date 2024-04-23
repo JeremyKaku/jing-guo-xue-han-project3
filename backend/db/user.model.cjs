@@ -1,7 +1,7 @@
 const model = require("mongoose").model;
 const UserSchema = require("./user.schema.cjs");
 
-const UserModel = model("user", UserSchema);
+const UserModel = model("User", UserSchema);
 
 function insertUser(user) {
   return UserModel.create(user);
