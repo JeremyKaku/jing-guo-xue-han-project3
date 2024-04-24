@@ -25,6 +25,6 @@ const ParticlesBackground = () => {
       options={particlesConfig}
     />
   );
-}
+};
 
 export default ParticlesBackground;
