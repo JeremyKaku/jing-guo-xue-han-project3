@@ -10,8 +10,11 @@ const process = require("process");
 
 const app = express();
 
-const mongoDBEndpoint =
-  "mongodb+srv://jing:986689@webdev.rporsug.mongodb.net/?retryWrites=true&w=majority&appName=WebDev";
+// const mongoDBEndpoint =
+//   "mongodb+srv://jing:986689@webdev.rporsug.mongodb.net/?retryWrites=true&w=majority&appName=WebDev";
+
+const mongoDBEndpoint = process.env.MONGODB_URI || "mongodb://127.0.0.1/WebDev";
+
 mongoose.connect(mongoDBEndpoint, {
   // useNewUrlParser: true,
 });
