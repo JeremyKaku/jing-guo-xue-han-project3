@@ -94,9 +94,19 @@
   box-shadow: 0 0 15px white;
 }
 
-label .icon {
+.icon {
   position: absolute;
   right: 20px;
+  top: 50%;
+  color: black;
+  transform: translateY(-50%);
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.copy-icon {
+  position: absolute;
+  right: 10px;
   top: 50%;
   color: black;
   transform: translateY(-50%);

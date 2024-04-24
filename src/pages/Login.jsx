@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import '../styles/Login.css';
 import catLogo from '../assets/img/cat.gif'
 import NavBar from '../components/NavBar';
 import axios from 'axios'
+import PasswordField from '../components/PasswordField';
+import CopyToClipboard from '../components/CopyToClipboard'
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -39,10 +41,8 @@ const Login = () => {
               <FaUser className='icon' />
             </label>
             <br />
-            <label className='input-box'>
-              <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required />
-              <FaLock className='icon' />
-            </label>
+            {/* <CopyToClipboard password={password} /> */}
+            <PasswordField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <br />
             <button type="submit" onClick={submit}>Login</button><br />
             <div className='register-link'>

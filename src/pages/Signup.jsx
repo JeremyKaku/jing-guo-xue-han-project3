@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import '../styles/Signup.css';
 import NavBar from '../components/NavBar';
+import PasswordField from '../components/PasswordField';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -27,14 +28,9 @@ const Signup = () => {
             <FaUser className='icon' />
           </label>
           <br />
-          <label className='input-box'>
-            <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required />
-            <FaLock className='icon' />
-          </label><br />
-          <label className='input-box'>
-            <input type="password" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-            <FaLock className='icon' />
-          </label>
+          <PasswordField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <br />
+          <PasswordField type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           <br />
           <button type="submit">Login</button><br />
           <div className='register-link'>
