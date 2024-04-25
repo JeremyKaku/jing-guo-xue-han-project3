@@ -11,6 +11,7 @@ import { mainContext } from "../context/mainContextProvider";
 const Login = () => {
   const { contextValue } = useContext(mainContext);
   const setIsLoggedIn = contextValue.setIsLoggedIn;
+  const setUser = contextValue.setUser;
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +24,7 @@ const Login = () => {
         password: password,
       });
       setIsLoggedIn(true);
+      setUser(username);
       navigate("/passwordmanager");
     } catch (e) {
       console.log(e);
