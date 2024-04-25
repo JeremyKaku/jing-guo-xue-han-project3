@@ -16,6 +16,7 @@ const Signup = () => {
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
   const [errorMsgState, setErrorMsgState] = useState("");
   const setIsLoggedIn = contextValue.setIsLoggedIn;
+  const setUser = contextValue.setUser;
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -37,6 +38,7 @@ const Signup = () => {
     try {
       await axios.post("/api/users/register", newUser);
       setIsLoggedIn(true);
+      setUser(usernameState);
       navigate("/passwordmanager");
     } catch (error) {
       console.error(error);

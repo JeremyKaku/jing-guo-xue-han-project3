@@ -16,6 +16,7 @@ const NavBar = () => {
   const { contextValue } = useContext(mainContext);
   const isLoggedIn = contextValue.isLoggedIn;
   const setIsLoggedIn = contextValue.setIsLoggedIn;
+  const userName = contextValue.user;
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -53,7 +54,7 @@ const NavBar = () => {
 
               {isLoggedIn && (
                 <Nav.Link as={Link} to="/passwordmanager">
-                  Password
+                  Passwords
                 </Nav.Link>
               )}
 
@@ -83,14 +84,14 @@ const NavBar = () => {
                 </Nav.Link>
               )}
               <div className="d-flex justify-content-end">
+                {isLoggedIn && <FaUserCircle className="icon" />}
                 {isLoggedIn && (
-                  <NavDropdown title="Username" id="navbarScrollingDropdown">
+                  <NavDropdown title={userName} id="navbarScrollingDropdown">
                     <NavDropdown.Item href="#action3" onClick={handleLogout}>
                       Sign out
                     </NavDropdown.Item>
                   </NavDropdown>
                 )}
-                {isLoggedIn && <FaUserCircle className="icon" />}
               </div>
             </Nav>
           </Navbar.Collapse>
