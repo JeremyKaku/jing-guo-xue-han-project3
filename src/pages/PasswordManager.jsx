@@ -121,7 +121,7 @@ const PasswordManager = () => {
     }
 
     if (length < 4 || length > 50) {
-      setAlertMsg("Password length should be between 6 and 20 characters.");
+      setAlertMsg("Password length should be between 6 and 50 characters.");
       setMessages("danger");
 
       return;
