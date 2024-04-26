@@ -2,17 +2,19 @@ import "../styles/Home.css";
 import passwordGif from "../assets/img/Password-Vault.gif";
 import { LinearGradient } from "react-text-gradients";
 import NavBar from "../components/NavBar";
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { mainContext } from "../context/mainContextProvider";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const { contextValue } = useContext(mainContext);
+  const setNavBarActive = contextValue.setNavBarActive;
+  setNavBarActive("Home");
   async function isLoggedIn() {
     try {
       const response = await axios.get("/api/users/loggedIn");
-      // const username = response.data.username;
     } catch (e) {
       navigate("/");
     }

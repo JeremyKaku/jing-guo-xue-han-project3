@@ -4,12 +4,6 @@ const express = require("express");
 const router = express.Router();
 const PasswordsModel = require("./db/passwords.model.cjs");
 
-// let pokemonColors = [
-//     {name: "pikachu", color: "yellow"},
-//     {name: "charizard", color: "red"},
-// ];
-
-// /api/pokemon/
 router.post("/", async function (req, res) {
   const requestBody = req.body;
   const username = cookieHelper.cookieDecryptor(req);
@@ -35,14 +29,12 @@ router.post("/", async function (req, res) {
       username,
       requestBody.site
     );
-    if (!getPasswordResponse) {
+    if (getPasswordResponse && getPasswordResponse.length > 0) {
       res.status(401);
       return res.send("You already have a password for this site!");
     }
 
     const response = await PasswordsModel.insertPassword(newPassword);
-    // res.cookie("pokemonOwner", "yuchen");
-    // res.cookie("favoriteColor", "yellow");
     return res.send(response);
   } catch (error) {
     console.log(error);
@@ -51,7 +43,6 @@ router.post("/", async function (req, res) {
   }
 });
 
-// localhost:8000/api/pokemon?name=pikachu
 router.get("/", async function (req, res) {
   const user = cookieHelper.cookieDecryptor(req);
 
@@ -69,8 +60,6 @@ router.get("/", async function (req, res) {
   }
 });
 
-// /api/pokemon/pikachu
-// --> pkId => pikachu
 router.put("/:pkId", async function (req, res) {
   const username = cookieHelper.cookieDecryptor(req);
   const passwordId = req.params.pkId;
@@ -93,7 +82,7 @@ router.put("/:pkId", async function (req, res) {
       username,
       passwordData.site
     );
-    if (!getPasswordResponse && getPasswordResponse._id !== passwordId) {
+    if (getPasswordResponse && getPasswordResponse._id !== passwordId) {
       res.status(401);
       return res.send("You already have a password for this site!");
     }
@@ -110,8 +99,6 @@ router.put("/:pkId", async function (req, res) {
   }
 });
 
-// -> /pokemon/pikachu => req.params.pokemonName === pikachu
-// -> /pokemon/pikachu?food=banana
 router.get("/:pkId", async function (req, res) {
   const pokemonId = req.params.pkId;
 
@@ -123,9 +110,6 @@ router.get("/:pkId", async function (req, res) {
     res.status(400);
     return res.send(error);
   }
-
-  // res.status(404);
-  // return res.send("Pokemon with name " + pokemonName + " not found :(");
 });
 
 router.delete("/:pkId", async function (req, res) {

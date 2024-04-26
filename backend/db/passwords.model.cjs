@@ -16,10 +16,6 @@ function getPasswordsById(id) {
   return PasswordsModel.findById(id).exec();
 }
 
-// function getPasswordsById() {
-//   return PasswordsModel.find().exec();
-// }
-
 function deletePassword(id) {
   return PasswordsModel.deleteOne({ _id: id });
 }
@@ -48,10 +44,4 @@ module.exports = {
   getPasswordsBySite,
   updatePassword,
   deletePassword,
-  // getPokemonById,
-  // deletePokemon,
-  // updatePokemon,
-  // insertPokemon,
-  // getAllPokemon,
-  // getPokemonByOwner
 };

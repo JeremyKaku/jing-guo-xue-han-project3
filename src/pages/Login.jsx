@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../styles/Login.css";
 import catLogo from "../assets/img/cat.gif";
-import NavBar from "../components/NavBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { mainContext } from "../context/mainContextProvider";
+import { Alert } from "react-bootstrap";
 
 const Login = () => {
   const { contextValue } = useContext(mainContext);
@@ -15,6 +15,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isShowMsg, setIsShowMsg] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
+  const setNavBarActive = contextValue.setNavBarActive;
+  setNavBarActive("Login");
 
   async function submit(e) {
     e.preventDefault();
@@ -27,6 +32,9 @@ const Login = () => {
       setUser(username);
       navigate("/passwordmanager");
     } catch (e) {
+      setIsShowMsg(true);
+      setAlertMsg(e.response.data);
+      setMsgType("danger");
       console.log(e);
     }
   }
@@ -37,9 +45,26 @@ const Login = () => {
     setPassword("");
   };
 
+  useEffect(() => {
+    if (isShowMsg) {
+      setTimeout(() => {
+        setIsShowMsg(false);
+      }, 3000);
+    }
+  }, [isShowMsg]);
+
   return (
     <>
-      <NavBar />
+      <Alert
+        className="my-alert"
+        key={msgType}
+        variant={msgType}
+        show={isShowMsg}
+        onClose={() => setIsShowMsg(false)}
+        dismissible
+      >
+        {alertMsg}
+      </Alert>
       <div className="cat-container">
         <div className="login-container">
           <h2>Login</h2>
