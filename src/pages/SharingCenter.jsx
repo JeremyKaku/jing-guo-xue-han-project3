@@ -57,7 +57,7 @@ const SharingCenter = () => {
     try {
       const response = await axios.put(`/api/share/${id}`, { status: status });
       setAlertMsg(response.data);
-      setMessages("Success confirm the sharing status.");
+      setMessages("success");
       getSharingPasswords();
     } catch (e) {
       setAlertMsg(e.response.data);
@@ -119,6 +119,14 @@ const SharingCenter = () => {
     );
   };
 
+  function formatDate(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   useEffect(() => {
     const filteredList = searchFilter(originalData);
     setSharePasswordsList(filteredList);
@@ -135,6 +143,7 @@ const SharingCenter = () => {
           <a className="col-site">{share.sharedSite}</a>
           <a className="col-user">{share.sharingUser}</a>
           <a className="col-status">{share.status}</a>
+          <a className="col-user">{formatDate(share.created)}</a>
           <div className="col-share-size">
             {share.status === "Accepted" && (
               <Button
