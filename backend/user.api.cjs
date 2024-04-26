@@ -61,7 +61,7 @@ router.post("/login", async function (request, response) {
 
     if (password !== getUserResponse.password) {
       response.status(400);
-      return response.send("Passwords don't match.");
+      return response.send("Account or password incorrect.");
     }
 
     const cookieData = { username: username };
@@ -88,7 +88,7 @@ router.get("/loggedIn", function (request, response) {
     });
   } else {
     response.status(400);
-    return response.send("Not logged in");
+    return response.send("Not logged in!");
   }
 });
 

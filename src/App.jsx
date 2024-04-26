@@ -8,6 +8,7 @@ import ParticlesBackground from "./components/ParticlesBackground";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainContextProvider from "./context/mainContextProvider";
+import SharingCenter from "./pages/SharingCenter";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/passwordmanager" element={<PasswordManager />} />
+              <Route path="/sharingcenter" element={<SharingCenter />} />
             </Routes>
           </MainContextProvider>
         </div>

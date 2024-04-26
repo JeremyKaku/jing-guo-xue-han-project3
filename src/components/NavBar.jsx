@@ -1,5 +1,4 @@
-import { useState, useContext, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import { useContext, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -16,8 +15,16 @@ const NavBar = () => {
   const { contextValue } = useContext(mainContext);
   const isLoggedIn = contextValue.isLoggedIn;
   const setIsLoggedIn = contextValue.setIsLoggedIn;
+  const searchValue = contextValue.searchValue;
+  const setSearchValue = contextValue.setSearchValue;
   const userName = contextValue.user;
+  const navBarActive = contextValue.navBarActive;
+  const setNavBarActive = contextValue.setNavBarActive;
   const navigate = useNavigate();
+
+  const handleNavbarClick = (nav) => {
+    setNavBarActive(nav);
+  };
 
   const handleLogout = async () => {
     try {
@@ -27,6 +34,11 @@ const NavBar = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleSearch = (value) => {
+    console.log(value);
+    setSearchValue(value);
   };
 
   useEffect(() => {}, [isLoggedIn]);
@@ -53,33 +65,58 @@ const NavBar = () => {
               {/* <Nav.Link as={Link} to="/">Home</Nav.Link> */}
 
               {isLoggedIn && (
-                <Nav.Link as={Link} to="/passwordmanager">
+                <Nav.Link
+                  as={Link}
+                  to="/passwordmanager"
+                  className={navBarActive === "Passwords" ? "active" : ""}
+                  onClick={() => handleNavbarClick("Passwords")}
+                >
                   Passwords
                 </Nav.Link>
               )}
-
               {isLoggedIn && (
-                <Form className="d-flex me-auto search-form">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-light">Search</Button>
-                  <br />
-                </Form>
+                <Nav.Link
+                  as={Link}
+                  to="/sharingcenter"
+                  className={navBarActive === "Sharing Center" ? "active" : ""}
+                  onClick={() => handleNavbarClick("Sharing Center")}
+                >
+                  Sharing Center
+                </Nav.Link>
               )}
             </Nav>
-            <br />{" "}
+            {isLoggedIn && (
+              <Form className="d-flex me-auto search-form">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  value={searchValue}
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+                <br />
+              </Form>
+            )}
+            <br />
             <Nav className="ms-auto my-2 my-lg-0">
               {!isLoggedIn && (
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link
+                  as={Link}
+                  to="/login"
+                  className={navBarActive === "Login" ? "active" : ""}
+                  onClick={() => handleNavbarClick("Login")}
+                >
                   Login
                 </Nav.Link>
               )}
               {!isLoggedIn && (
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link
+                  as={Link}
+                  to="/signup"
+                  className={navBarActive === "Signup" ? "active" : ""}
+                  onClick={() => handleNavbarClick("Signup")}
+                >
                   Sign up
                 </Nav.Link>
               )}

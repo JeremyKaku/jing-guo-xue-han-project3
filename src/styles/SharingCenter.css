@@ -113,11 +113,38 @@ p {
   border-bottom: #ccc 1px solid;
   height: 60px;
 }
-
 .col-button-size {
-  width: 100px;
+  width: 300px;
 }
-
+.col-share-size {
+  width: 200px;
+}
+.col-user {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+  height: 50px;
+  padding: 10px 5px;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+.col-status {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  height: 50px;
+  padding: 10px 5px;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: transparent;
+}
 .modal-content {
   background-color: #212528;
   color: white;
@@ -125,11 +152,9 @@ p {
 .input-icon {
   border: none;
 }
-
 .length {
   width: 40px;
 }
-
 .my-alert {
   z-index: 9999;
 }

@@ -1,22 +1,25 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../styles/Signup.css";
-import NavBar from "../components/NavBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { mainContext } from "../context/mainContextProvider";
+import { Alert } from "react-bootstrap";
 
 const Signup = () => {
-  // const history = useHistory();
   const { contextValue } = useContext(mainContext);
   const navigate = useNavigate();
   const [usernameState, setUsernameState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
-  const [errorMsgState, setErrorMsgState] = useState("");
   const setIsLoggedIn = contextValue.setIsLoggedIn;
   const setUser = contextValue.setUser;
+  const [isShowMsg, setIsShowMsg] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
+  const setNavBarActive = contextValue.setNavBarActive;
+  setNavBarActive("Signup");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,7 +31,9 @@ const Signup = () => {
   async function handleSignup(e) {
     e.preventDefault();
     if (passwordState !== confirmPasswordState) {
-      setErrorMsgState("Passwords do not match!");
+      setIsShowMsg(true);
+      setAlertMsg("Two passwords do not match!");
+      setMsgType("danger");
       return;
     }
     const newUser = {
@@ -41,13 +46,34 @@ const Signup = () => {
       setUser(usernameState);
       navigate("/passwordmanager");
     } catch (error) {
+      setIsShowMsg(true);
+      setAlertMsg(error.response.data);
+      setMsgType("danger");
+
       console.error(error);
     }
   }
 
+  useEffect(() => {
+    if (isShowMsg) {
+      setTimeout(() => {
+        setIsShowMsg(false);
+      }, 3000);
+    }
+  });
+
   return (
     <>
-      <NavBar />
+      <Alert
+        className="my-alert"
+        key={msgType}
+        variant={msgType}
+        show={isShowMsg}
+        onClose={() => setIsShowMsg(false)}
+        dismissible
+      >
+        {alertMsg}
+      </Alert>
       <div className="signup-container">
         <h2>Sign up</h2>
         <form onSubmit={handleLogin}>
