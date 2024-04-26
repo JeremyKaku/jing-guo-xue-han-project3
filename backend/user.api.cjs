@@ -1,19 +1,12 @@
 const cookieHelper = require("./cookie.helper.cjs");
-
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
 const router = express.Router();
-
 const userModel = require("./db/user.model.cjs");
+const bcrypt = require("bcryptjs");
 
-// const users = [
-//     {username: 'hunter', trainerId: 123},
-//     {username: 'alex', trainerId: 234}
-// ]
-
-// localhost:8000/users/?startOfUsername=h
 router.post("/register", async function (request, response) {
+  request.body.password = bcrypt.hashSync(request.body.password, 10);
   const requestBody = request.body;
 
   const username = requestBody.username;
@@ -30,8 +23,8 @@ router.post("/register", async function (request, response) {
       response.status(400);
       return response.send("User already exists.");
     }
+
     const createUserResponse = await userModel.insertUser(newUser);
-    // await userModel.insertUser(newUser);
 
     const cookieData = { username: username };
 
@@ -59,9 +52,13 @@ router.post("/login", async function (request, response) {
       return response.send("No user found.");
     }
 
-    if (password !== getUserResponse.password) {
-      response.status(400);
-      return response.send("Account or password incorrect.");
+    // if (password !== getUserResponse.password) {
+    //   response.status(400);
+    //   return response.send("Account or password incorrect.");
+    // }
+
+    if (!bcrypt.compareSync(password, getUserResponse.password)) {
+      response.status(401).send("Account or password incorrect.");
     }
 
     const cookieData = { username: username };
@@ -96,25 +93,5 @@ router.post("/logout", function (request, response) {
   response.clearCookie("username");
   return response.send("Logged out");
 });
-
-// router.post('/', function(request, response) {
-//     const body = request.body;
-
-//     const username = body.username;
-
-//     if(!username) {
-//         response.status(401);
-//         return response.send("Missing username")
-//     }
-
-//     const trainerId = Math.floor(Math.random() * 1000);
-
-//     users.push({
-//         username: username,
-//         trainerId: trainerId,
-//     })
-
-//     response.json("Successfully created user with trainer ID " + trainerId)
-// })
 
 module.exports = router;
