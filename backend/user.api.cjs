@@ -52,11 +52,13 @@ router.post("/login", async function (request, response) {
       return response.send("No user found.");
     }
 
+    // Normoally, we would compare the password with the stored password.
     // if (password !== getUserResponse.password) {
     //   response.status(400);
     //   return response.send("Account or password incorrect.");
     // }
 
+    // But since we are using bcrypt, we need to use the compareSync method.
     if (!bcrypt.compareSync(password, getUserResponse.password)) {
       response.status(401).send("Account or password incorrect.");
     }

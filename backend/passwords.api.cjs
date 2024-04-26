@@ -78,11 +78,24 @@ router.put("/:pkId", async function (req, res) {
   }
 
   try {
-    const getPasswordResponse = await PasswordsModel.getPasswordsBySite(
+    const getPasswordResponse = await PasswordsModel.getPasswordsById(
+      passwordId
+    );
+    if (!getPasswordResponse) {
+      res.status(401);
+      return res.send("You do not have this password!");
+    }
+
+    const getPasswordResponseBySite = await PasswordsModel.getPasswordsBySite(
       username,
       passwordData.site
     );
-    if (getPasswordResponse && getPasswordResponse._id !== passwordId) {
+
+    if (
+      getPasswordResponseBySite &&
+      getPasswordResponseBySite.length > 0 &&
+      getPasswordResponseBySite[0]._id != passwordId
+    ) {
       res.status(401);
       return res.send("You already have a password for this site!");
     }

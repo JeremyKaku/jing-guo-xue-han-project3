@@ -121,7 +121,7 @@ const PasswordManager = () => {
     }
 
     if (length < 4 || length > 50) {
-      setAlertMsg("Password length should be between 6 and 50 characters.");
+      setAlertMsg("Password length should be between 4 and 50 characters.");
       setMessages("danger");
 
       return;
@@ -137,13 +137,16 @@ const PasswordManager = () => {
     if (symbolsChecked) {
       characters += "!@#$%^&*()_+";
     }
-    for (let i = 0; i < length; i++) {
-      password += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
+    // Normal Passwords without Cryptographically Secure
+    // for (let i = 0; i < length; i++) {
+    //   password += characters.charAt(
+    //     Math.floor(Math.random() * characters.length)
+    //   );
+    // }
 
-    // generateRandomPassword(length);
+    // Cryptographically Secure Passwords
+    password = generateRandomPassword(length, characters);
+
     setPassword(password);
     setAlertMsg("Password generated successfully.");
     setMessages("success");
@@ -337,22 +340,16 @@ const PasswordManager = () => {
   };
 
   //Cryptographically Secure Passwords
-  function generateRandomPassword(length) {
-    // Determine the number of bytes needed for the desired length
-    const bytesNeeded = Math.ceil(length * 0.75); // Base64 uses 6 bits per character (0.75 bytes per character)
+  function generateRandomPassword(length, charset) {
+    const randomValues = new Uint32Array(length);
+    const password = [];
+    window.crypto.getRandomValues(randomValues);
+    for (let i = 0; i < length; i++) {
+      const index = randomValues[i] % charset.length;
+      password.push(charset[index]);
+    }
 
-    // Generate random bytes
-    const randomBytes = crypto.randomBytes(bytesNeeded);
-
-    // Convert random bytes to a base64 string
-    const password = randomBytes
-      .toString("base64")
-      // Remove special characters from base64 encoding
-      .replace(/[+/=]/g, "")
-      // Ensure the password is the desired length
-      .slice(0, length);
-
-    return password;
+    return password.join("");
   }
 
   const passwordsListElements = [];
