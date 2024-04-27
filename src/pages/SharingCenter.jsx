@@ -235,6 +235,7 @@ const SharingCenter = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              readOnly
             />
             <InputGroup.Text>
               <button className="input-icon" onClick={togglePasswordVisibility}>
