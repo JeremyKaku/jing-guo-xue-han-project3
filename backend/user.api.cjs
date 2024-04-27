@@ -60,7 +60,7 @@ router.post("/login", async function (request, response) {
 
     // But since we are using bcrypt, we need to use the compareSync method.
     if (!bcrypt.compareSync(password, getUserResponse.password)) {
-      response.status(401).send("Account or password incorrect.");
+      return response.status(401).send("Account or password incorrect.");
     }
 
     const cookieData = { username: username };

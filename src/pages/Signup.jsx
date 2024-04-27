@@ -30,12 +30,21 @@ const Signup = () => {
 
   async function handleSignup(e) {
     e.preventDefault();
+
+    if (!usernameState || !passwordState || !confirmPasswordState) {
+      setIsShowMsg(true);
+      setAlertMsg("Please fill in all the fields!");
+      setMsgType("danger");
+      return;
+    }
+
     if (passwordState !== confirmPasswordState) {
       setIsShowMsg(true);
       setAlertMsg("Two passwords do not match!");
       setMsgType("danger");
       return;
     }
+
     const newUser = {
       username: usernameState,
       password: passwordState,
