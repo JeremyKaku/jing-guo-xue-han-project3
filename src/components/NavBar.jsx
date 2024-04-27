@@ -37,7 +37,6 @@ const NavBar = () => {
   };
 
   const handleSearch = (value) => {
-    console.log(value);
     setSearchValue(value);
   };
 
