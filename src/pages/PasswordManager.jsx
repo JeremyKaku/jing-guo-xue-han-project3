@@ -13,7 +13,6 @@ import { FaInternetExplorer } from "react-icons/fa6";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Alert from "react-bootstrap/Alert";
 import { FaRegCircleUser } from "react-icons/fa6";
-import crypto from "crypto";
 
 const PasswordManager = () => {
   const [show, setShow] = useState(false);
@@ -144,8 +143,14 @@ const PasswordManager = () => {
     //   );
     // }
 
-    // Cryptographically Secure Passwords
-    password = generateRandomPassword(length, characters);
+    while (
+      (!containsAlphabet(password) && alphabetChecked) ||
+      (!containsNumber(password) && numChecked) ||
+      (!containsSymbol(password) && symbolsChecked)
+    ) {
+      // Cryptographically Secure Passwords
+      password = generateRandomPassword(length, characters);
+    }
 
     setPassword(password);
     setAlertMsg("Password generated successfully.");
@@ -203,7 +208,7 @@ const PasswordManager = () => {
 
   const editPassword = async () => {
     try {
-      const response = await axios.put("/api/passwords/" + editId, {
+      await axios.put("/api/passwords/" + editId, {
         site: site,
         password: password,
       });
@@ -352,6 +357,26 @@ const PasswordManager = () => {
     return password.join("");
   }
 
+  function containsAlphabet(str) {
+    return /[a-zA-Z]/.test(str);
+  }
+
+  function containsNumber(str) {
+    return /\d/.test(str);
+  }
+
+  function containsSymbol(str) {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(str);
+  }
+
+  function formatDate(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   const passwordsListElements = [];
   passwordsList.map((password, index) => {
     passwordsListElements.push(
@@ -360,6 +385,7 @@ const PasswordManager = () => {
           <RiLockPasswordLine />
         </a>
         <a className="col-site">{password.site}</a>
+        <a className="col-date">{formatDate(password.created)}</a>
         <div className="col-psw-size">
           <Button
             className="col-button"
@@ -393,7 +419,6 @@ const PasswordManager = () => {
 
   return (
     <>
-      {/* <NavBar /> */}
       <Alert
         className="my-alert"
         key={msgType}
@@ -408,8 +433,6 @@ const PasswordManager = () => {
       <div className="top-container">
         <div>
           <h3>Passwords</h3>
-        </div>
-        <div>
           <p>
             Create, save, and manage your passwords so you can easily sign in to
             sites and apps.
