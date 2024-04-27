@@ -306,8 +306,10 @@ const PasswordManager = () => {
     if (searchValue === "") {
       return passwordsList;
     }
-    return passwordsList.filter((password) =>
-      password.site.toLowerCase().includes(searchValue.toLowerCase())
+    return passwordsList.filter(
+      (password) =>
+        password.site.toLowerCase().includes(searchValue.toLowerCase()) ||
+        formatDate(password.created).includes(searchValue.toLowerCase())
     );
   };
 

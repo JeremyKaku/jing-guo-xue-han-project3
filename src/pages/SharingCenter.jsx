@@ -115,7 +115,10 @@ const SharingCenter = () => {
         subItem.sharedSite.toLowerCase().includes(searchValue.toLowerCase()) ||
         subItem.sharingUser.toLowerCase().includes(searchValue.toLowerCase()) ||
         subItem.status.toLowerCase().includes(searchValue.toLowerCase()) ||
-        subItem.sharedPassword.toLowerCase().includes(searchValue.toLowerCase())
+        subItem.sharedPassword
+          .toLowerCase()
+          .includes(searchValue.toLowerCase()) ||
+        formatDate(subItem.created).includes(searchValue.toLowerCase())
     );
   };
 
