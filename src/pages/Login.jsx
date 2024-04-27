@@ -23,6 +23,14 @@ const Login = () => {
 
   async function submit(e) {
     e.preventDefault();
+
+    if (!username || !password) {
+      setIsShowMsg(true);
+      setAlertMsg("Please fill in all the fields!");
+      setMsgType("danger");
+      return;
+    }
+
     try {
       await axios.post("/api/users/login", {
         username: username,
